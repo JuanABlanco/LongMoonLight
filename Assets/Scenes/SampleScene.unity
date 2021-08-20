@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 690175000}
   m_Layer: 0
   m_Name: Pared (1)
-  m_TagString: Untagged
+  m_TagString: Espejo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -511,7 +511,8 @@ MonoBehaviour:
   LR: {fileID: 0}
   Foco: {fileID: 1172653072}
   Puntos: []
-  Direccion: {x: 0, y: 0}
+  BounceLimit: 10
+  Posiciones: []
 --- !u!120 &1993569710
 LineRenderer:
   m_ObjectHideFlags: 0
