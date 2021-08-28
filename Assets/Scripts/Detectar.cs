@@ -19,7 +19,7 @@ public class Detectar : MonoBehaviour
     {
         colocar = false;
         ptsProhibidos = new List<Puntos>();
-        desactivarModoColocar();
+        cuadrillas.enabled = false;
     }
 
     void Start()
@@ -30,12 +30,16 @@ public class Detectar : MonoBehaviour
     void Update()
     {
 
+        colocarNuevoEspejo();
+
+    }
+
+    void colocarNuevoEspejo(){
         if (Input.GetMouseButtonDown(0))
         {//Si el usuario da Click
 
             posicion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
 
-            //ActivarEspejo.clickEnActivarEspejo(calcularPosicion(posicion)) && colocar == false
             if (ActivarEspejo.espejoActivado && colocar == false)
             {//Si activo el boton de espejos y no se esta en modo colocar
 
@@ -48,7 +52,7 @@ public class Detectar : MonoBehaviour
             {
 
                 if (ActivarEspejo.espejoActivado && colocar == true)
-                {
+                {//Si el modo colocacion esta activo y hay una instancia de espejo
                     Vector3 posicionColocacion = calcularPosicion(posicion);
                     if (sePuedeColocar(posicionColocacion))
                     {
@@ -56,14 +60,17 @@ public class Detectar : MonoBehaviour
                         instancia.transform.position = posicionColocacion;
                         instancia = null;
                         ActivarEspejo.espejoActivado = false;
-                        Botones.espejosColocados = Botones.espejosColocados + 1;
-                        desactivarModoColocar();
+                        StartCoroutine(desactivarModoColocar());
                         aggPtsProhibidos(posicionColocacion);
                     }
                     else
                     {
                         Debug.Log("No se puede colocar");
                     }
+                }else{
+
+
+
                 }
 
             }
@@ -71,22 +78,40 @@ public class Detectar : MonoBehaviour
         }
         else
         {//Si el usuario no da Click
-            if (Input.GetMouseButtonDown(1) && colocar == true)
+            if (Input.GetMouseButtonDown(1) && colocar == true && ActivarEspejo.espejoActivado)
             {//Si el usuario da Click Derecho
                 colocar = false;
+                ActivarEspejo.espejoActivado = false;
                 Destroy(instancia, 0f);
                 desactivarModoColocar();
             }
-            if (colocar == true)
+            if (colocar == true)//Hace que el espejo siga el mouse a cualquier posicion
             {
                 posicion = Camera.main.ScreenToWorldPoint(Input.mousePosition);
                 instancia.transform.position = new Vector3(posicion.x, posicion.y, 0);
             }
-        }
+            if(Input.GetMouseButtonDown(1) && Botones.espejoEnMovimiento == true && colocar == true){
 
+                colocar = false;
+                Botones.espejoEnMovimiento = false;
+                instancia.transform.position = Botones.posicionOriginalEspejo;
+                instancia = null;
+                desactivarModoColocar();
+                
+            }            
+        }
     }
 
-    private Vector3 calcularPosicion(Vector3 posicion)
+    public void moverEspejo(){
+
+        colocar = true;
+        Botones.espejoEnMovimiento = true;
+        activarModoColocar();
+        instancia = Botones.espejo;
+
+    }      
+
+    Vector3 calcularPosicion(Vector3 posicion)
     {
         float x = posicion.x;
         float y = posicion.y;
@@ -176,9 +201,10 @@ public class Detectar : MonoBehaviour
         ptsProhibidos.Add(new Puntos(11, -3));
     }
 
-    void desactivarModoColocar()
+    IEnumerator desactivarModoColocar()
     {
         cuadrillas.enabled = false;
+        yield return new WaitForSeconds(0.15f);//Espera una fraccion de 15 segundos antes de desactivar el modoColocar
         modoColocar = false;
     }
 
