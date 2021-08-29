@@ -43,10 +43,11 @@ public class LightSource : MonoBehaviour
                 {
                     if(hit.point != LastPosition)
                     {
-                        Posiciones.Add(hit.point); 
+                        Vector2 Posicion = new Vector2(hit.point.x * 0.95f, hit.point.y * 0.95f) ;
+                        Posiciones.Add(Posicion); 
                         //LastPosition = hit.point;
                         Inicio = hit.point;
-                        Direccion = Vector2.Reflect(Direccion, hit.normal);
+                        Direccion = hit.normal;
                     }
                 } else
                 {

@@ -5,63 +5,28 @@ using Clase.Puntos;
 
 public class ActivarEspejo : MonoBehaviour
 {
-
-    List<Puntos> ptsActivarEspejos;
-    public static bool espejoActivado;
+    public bool espejoActivado;
+    private static ActivarEspejo _instance;
+    public static ActivarEspejo Instance { get { return _instance; } }
 
     void Awake()
     {
-        ptsActivarEspejos = new List<Puntos>();
-        espejoActivado = false;
-        distribuirPtsEspecialesInicio();
-    }
-
-    void Start()
-    {
-
-    }
-
-    void Update()
-    {
-        
-    }
-
-    void distribuirPtsEspecialesInicio()
-    {
-        //11 -4 11 -3
-        ptsActivarEspejos.Add(new Puntos(11, -4));
-        ptsActivarEspejos.Add(new Puntos(11, -3));
-        ptsActivarEspejos.Add(new Puntos(12, -4));
-        ptsActivarEspejos.Add(new Puntos(12, -3));
-    }
-
-    void OnMouseDown(){
-        
-        espejoActivado = true;
-        Debug.Log("Espejo activadisimo");
-        
-    }
-
-    public static bool clickEnActivarEspejo(Vector3 posicion)
-    {
-        if (posicion.x < 11)
+        if (_instance != null && _instance != this)
         {
-            return false;
+            Destroy(this.gameObject);
         }
         else
         {
-            for (int x = 11; x < 13; x++)
-            {
-                for (int j = -4; j <= -3; j++)
-                {
-                    if (posicion.y == j)
-                    {
-                        return true;
-                    }
-                }
-            }
-            return false;
+            _instance = this;
         }
-    }  
+        _instance.espejoActivado = false;
+    }
+
+
+    public void ActivaEspejo(){
+
+        _instance.espejoActivado = true;
+        
+    }
 
 }

@@ -9,6 +9,7 @@ public class Botones : MonoBehaviour
     public Button girarDer;
     public Button eliminar;
     public Button mover;
+    public Transform BtnsAcciones;
     public static GameObject espejo;
     public static Vector3 posicionOriginalEspejo;
     public static bool manipularEspejo;
@@ -30,12 +31,14 @@ public class Botones : MonoBehaviour
     void Update()
     {
         
-         if(manipularEspejo){
+        if(manipularEspejo){
             girarIzq.gameObject.SetActive(true);
             girarDer.gameObject.SetActive(true); 
             eliminar.gameObject.SetActive(true); 
-            mover.gameObject.SetActive(true);          
-        }else{
+            mover.gameObject.SetActive(true);
+            BtnsAcciones.position = espejo.transform.position;
+        }
+        else{
             girarIzq.gameObject.SetActive(false);
             girarDer.gameObject.SetActive(false);
             eliminar.gameObject.SetActive(false);
@@ -55,13 +58,13 @@ public class Botones : MonoBehaviour
     }
 
     public IEnumerator esperaGirarDerecha(){
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         espejo.transform.Rotate(Vector3.forward, 20f);
         SpinObject.clickEnEspejo = true;
     }
 
     public IEnumerator esperaGirarIzquierda(){
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.05f);
         espejo.transform.Rotate(Vector3.forward, -20f);
         SpinObject.clickEnEspejo = true;
     }    

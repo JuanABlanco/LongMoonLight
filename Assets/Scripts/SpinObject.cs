@@ -24,7 +24,6 @@ public class SpinObject : MonoBehaviour
         Botones.posicionOriginalEspejo = this.transform.position;
         Botones.espejo = this.gameObject;
         StartCoroutine(esperarModoColocar());
-        
     }
 
     IEnumerator registrarClick(){
@@ -38,7 +37,7 @@ public class SpinObject : MonoBehaviour
     }    
 
     IEnumerator esperarModoColocar(){//Se necesita esperar que el modoColocar termine, para evitar bugs
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.1f);
         if(Detectar.modoColocar == true){
             //Si despues de 0.1 segundos, modoColocar == true, entonces significa que
             //el click registrado sobre el espejo (reflector) es porque a penas se coloco
