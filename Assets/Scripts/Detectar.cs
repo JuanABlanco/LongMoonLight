@@ -9,7 +9,7 @@ public class Detectar : MonoBehaviour
     Vector3 posicion;
     bool colocar;//False -> No se coloca el objeto, solo se instancia. // True -> Se coloca el objeto
     GameObject instancia;
-    List<Puntos> ptsProhibidos;
+    public static List<Puntos> ptsProhibidos;
 
     public GameObject prefab;
     public TilemapRenderer cuadrillas;
@@ -95,12 +95,12 @@ public class Detectar : MonoBehaviour
             }
             if(Input.GetMouseButtonDown(1) && Botones.espejoEnMovimiento == true && colocar == true){
 
-                colocar = false;
+/*                 colocar = false;
                 Botones.espejoEnMovimiento = false;
                 instancia.transform.position = Botones.posicionOriginalEspejo;
                 instancia = null;
                 cuadrillas.enabled = false;
-                modoColocar = false;
+                modoColocar = false; */
                 
             }            
         }
@@ -108,14 +108,14 @@ public class Detectar : MonoBehaviour
 
     public void moverEspejo(){
 
-        colocar = true;
+/*         colocar = true;
         Botones.espejoEnMovimiento = true;
         instancia = Botones.espejo;
-        activarModoColocar();
+        activarModoColocar(); */
 
     }      
 
-    Vector3 calcularPosicion(Vector3 posicion)
+    public static Vector3 calcularPosicion(Vector3 posicion)
     {
         float x = posicion.x;
         float y = posicion.y;
@@ -162,14 +162,24 @@ public class Detectar : MonoBehaviour
         return new Vector3(xEntera, yEntera, 0f);
     }
 
-    void aggPtsProhibidos(Vector3 posicionColocacion)
+    public static void aggPtsProhibidos(Vector3 posicionColocacion)
     {
 
         Puntos punto = new Puntos(posicionColocacion.x, posicionColocacion.y);
         ptsProhibidos.Add(punto);
     }
 
-    bool sePuedeColocar(Vector3 posicionColocacion)
+    public static void eliminarPtoProhibido(Vector3 posicionInicial){
+        Debug.Log("Total lista: " + ptsProhibidos.Count);
+        for(int i = 0; i < ptsProhibidos.Count; i++){
+            if(ptsProhibidos[i].x == posicionInicial.x && ptsProhibidos[i].y == posicionInicial.y){
+                Debug.Log("Borre: " + i +", " + ptsProhibidos[i].x + ", " + ptsProhibidos[i].y);
+                ptsProhibidos.RemoveAt(i);
+            }
+        }
+    }
+
+    public static bool sePuedeColocar(Vector3 posicionColocacion)
     {
         for (int i = 0; i < ptsProhibidos.Count; i++)
         {

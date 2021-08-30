@@ -21,14 +21,14 @@ public class SpinObject : MonoBehaviour
     void OnMouseDown(){
         
         Debug.Log("Click sobre mi");
-        Botones.posicionOriginalEspejo = this.transform.position;
-        Botones.espejo = this.gameObject;
+/*         Botones.posicionOriginalEspejo = this.transform.position;
+ */     Botones.espejo = this.gameObject;
         StartCoroutine(esperarModoColocar());
     }
 
     IEnumerator registrarClick(){
-        clickEnEspejo = false;
-        yield return new WaitForSeconds(0.2f);
+        //clickEnEspejo = false;
+        yield return new WaitForSeconds(0);
          if(clickEnEspejo == false){
             Botones.hacerVisibleBotones(false);
         }else{

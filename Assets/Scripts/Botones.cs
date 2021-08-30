@@ -11,7 +11,7 @@ public class Botones : MonoBehaviour
     public Button mover;
     public Transform BtnsAcciones;
     public static GameObject espejo;
-    public static Vector3 posicionOriginalEspejo;
+    //public static Vector3 posicionOriginalEspejo;
     public static bool manipularEspejo;
     public static bool espejoEnMovimiento;
 
@@ -58,7 +58,7 @@ public class Botones : MonoBehaviour
     }
 
     public IEnumerator esperaGirarDerecha(){
-        yield return new WaitForSeconds(0.05f);
+        yield return new WaitForSeconds(0.05f);//era 0.05f
         espejo.transform.Rotate(Vector3.forward, 20f);
         SpinObject.clickEnEspejo = true;
     }
@@ -72,6 +72,7 @@ public class Botones : MonoBehaviour
     public void eliminarEspejo(){
         Destroy(espejo, 0f);
         hacerVisibleBotones(false);
+        Detectar.eliminarPtoProhibido(espejo.transform.position);
     }
 
     public static void hacerVisibleBotones(bool valor){
