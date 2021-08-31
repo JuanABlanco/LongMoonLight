@@ -13,8 +13,6 @@ public class LightSource : MonoBehaviour
 
     public int BounceLimit = 2;
 
-    private Vector2 LastPosition;
-
     public List<Vector2> Posiciones = new List<Vector2>();
 
     private void Awake()
@@ -31,9 +29,9 @@ public class LightSource : MonoBehaviour
     {
         Posiciones = new List<Vector2>();
         Posiciones.Add(Foco.position);
-        LastPosition = Foco.position;
+        GameObject LastPosition = Foco.transform.parent.gameObject;
 
-        for (int i=0; i<BounceLimit; i++)
+        for (int i = 0; i < BounceLimit; i++)
         {
             RaycastHit2D hit = Physics2D.Raycast(Inicio, Direccion, 100f);
 
@@ -41,20 +39,26 @@ public class LightSource : MonoBehaviour
             {
                 if (hit.transform.CompareTag("Espejo"))
                 {
-                    if(hit.point != LastPosition)
+                    if (!GameObject.Equals(LastPosition, hit.transform.gameObject))
                     {
-                        Vector2 Posicion = new Vector2(hit.point.x * 0.95f, hit.point.y * 0.95f) ;
-                        Posiciones.Add(Posicion); 
-                        //LastPosition = hit.point;
+                        Posiciones.Add(hit.point);
+                        LastPosition = hit.transform.gameObject;
                         Inicio = hit.point;
-                        Direccion = hit.normal;
+                        Direccion = -hit.transform.up;
                     }
-                } else
+                    else
+                    {
+                        Inicio = hit.transform.parent.Find("PivoteLuz").transform.position;
+                        Direccion = -hit.transform.up;
+                    }
+                }
+                else
                 {
                     Posiciones.Add(hit.point);
                     break;
                 }
-            } else
+            }
+            else
             {
                 Posiciones.Add(Direccion * 1000f);
                 break;
@@ -62,8 +66,8 @@ public class LightSource : MonoBehaviour
         }
 
         LR.positionCount = Posiciones.Count;
-        
-        for(int i = 0; i<Posiciones.Count; i++)
+
+        for (int i = 0; i < Posiciones.Count; i++)
         {
             LR.SetPosition(i, Posiciones[i]);
         }
