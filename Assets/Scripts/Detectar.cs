@@ -53,12 +53,13 @@ public class Detectar : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {//Si el usuario da Clicks
-
+            
             if (ActivarEspejo && colocar == true)
             {//Si el modo colocacion esta activo y hay una instancia de espejo
                 Vector3 posicionColocacion = calcularPosicion(posicion);
                 if (sePuedeColocar(posicionColocacion))
                 {
+                    AudioManager.Instance.PonerFX();
                     colocar = false;
                     instancia.transform.position = posicionColocacion;
                     instancia = null;

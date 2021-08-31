@@ -44,6 +44,7 @@ public class Mover : MonoBehaviour
             }else{
 
                 if(Detectar.sePuedeColocar(posicionColocacion)){
+                    AudioManager.Instance.PonerFX();
                     colocar = false;
                     instancia.transform.position = posicionColocacion;
                     instancia = null;
@@ -56,6 +57,7 @@ public class Mover : MonoBehaviour
         }
 
         if(Input.GetMouseButtonDown(1) && colocar == true){
+            AudioManager.Instance.BotonEliminarFX();
             instancia.transform.position = posicionOriginal;
             colocar = false;
             instancia = null;
