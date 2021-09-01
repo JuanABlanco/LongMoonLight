@@ -13,6 +13,7 @@ public class Score : MonoBehaviour
     void Start()
     {
         contador = 0;
+        movimientos = 0;
     }
 
     // Update is called once per frame

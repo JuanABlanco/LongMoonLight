@@ -20,7 +20,7 @@ public class SpinObject : MonoBehaviour
 
     void OnMouseDown(){
         
-        Debug.Log("Click sobre mi");
+        //Debug.Log("Click sobre mi");
 /*         Botones.posicionOriginalEspejo = this.transform.position;
  */     Botones.espejo = this.gameObject;
         StartCoroutine(esperarModoColocar());

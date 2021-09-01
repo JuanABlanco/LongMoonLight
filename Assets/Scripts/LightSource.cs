@@ -1,10 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEditor;
+using UnityEngine.Tilemaps;
+ 
 
 [RequireComponent(typeof(LineRenderer))]
 public class LightSource : MonoBehaviour
 {
+
+    public TilemapRenderer cuadrillas;
+
     public LineRenderer LR;
 
     public Transform Foco;
@@ -57,6 +63,10 @@ public class LightSource : MonoBehaviour
                     if(hit.transform.CompareTag("Portal")){
                         Posiciones.Add(hit.point);
                         Debug.Log("Le pegue al portal");
+                        if(cuadrillas.enabled == false){
+                            StartCoroutine(ganar());
+                        }
+                        
                     }
                     Posiciones.Add(hit.point);
                     break;
@@ -74,6 +84,16 @@ public class LightSource : MonoBehaviour
         for (int i = 0; i < Posiciones.Count; i++)
         {
             LR.SetPosition(i, Posiciones[i]);
+        }
+    }
+
+    public IEnumerator ganar(){
+        yield return new WaitForSeconds(0.5f);//era 0.05f
+        bool var = EditorUtility.DisplayDialog("Información", "Enhorabuena ! Has completado el level 1 y único nivel de la beta.\nEl record registrado es de 4 espejos 1 movimiento, lo has superado? \nPerdona los posibles bugs, el juego esta en desarrollo.", "Salir", "Salir");
+        if(var){
+            Application.LoadLevel("Inicio");
+        }else{
+            Application.LoadLevel("Inicio");
         }
     }
 }
