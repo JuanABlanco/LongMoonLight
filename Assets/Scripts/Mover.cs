@@ -50,6 +50,7 @@ public class Mover : MonoBehaviour
                     Detectar.eliminarPtoProhibido(posicionOriginal);
                     Detectar.aggPtsProhibidos(posicionColocacion);
                     desactivarModoColocar();
+                    Score.movimientos = Score.movimientos + 1;
                 }
 
             }

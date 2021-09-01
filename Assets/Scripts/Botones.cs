@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEditor;
 
 public class Botones : MonoBehaviour
 {
@@ -73,9 +74,18 @@ public class Botones : MonoBehaviour
         Destroy(espejo, 0f);
         hacerVisibleBotones(false);
         Detectar.eliminarPtoProhibido(espejo.transform.position);
+        Score.contador = Score.contador - 1;
+        Score.movimientos = Score.movimientos + 1;
     }
 
     public static void hacerVisibleBotones(bool valor){
         manipularEspejo = valor;  
+    }
+
+    public void volverAlMenu(){
+        if (EditorUtility.DisplayDialog("Regresar",
+        "¿Desea regresar al menú principal?", "Sí", "No") == true){
+            Application.LoadLevel("Inicio");
+        };
     }
 }

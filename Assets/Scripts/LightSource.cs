@@ -54,6 +54,10 @@ public class LightSource : MonoBehaviour
                 }
                 else
                 {
+                    if(hit.transform.CompareTag("Portal")){
+                        Posiciones.Add(hit.point);
+                        Debug.Log("Le pegue al portal");
+                    }
                     Posiciones.Add(hit.point);
                     break;
                 }

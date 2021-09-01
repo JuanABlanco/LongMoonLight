@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Inicio : MonoBehaviour
+public class TutorialScript : MonoBehaviour
 {
     // Start is called before the first frame update
-    
-    void Awake(){
-    }
-    
     void Start()
     {
         
@@ -20,11 +16,7 @@ public class Inicio : MonoBehaviour
         
     }
 
-    public void jugar(){
-        Application.LoadLevel("SampleScene");
-    }
-
-    public void tutorial(){
-        Application.LoadLevel("Tutorial");
-    }
+    public void volver(){
+        Application.LoadLevel("Inicio");
+    }    
 }

@@ -65,6 +65,7 @@ public class Detectar : MonoBehaviour
                     ActivarEspejo = false;
                     StartCoroutine(desactivarModoColocar());
                     aggPtsProhibidos(posicionColocacion);
+                    Score.contador = Score.contador + 1;
                 }
                 else
                 {
@@ -195,7 +196,7 @@ public class Detectar : MonoBehaviour
 
     void distribuirPtsProhibidosInicio()
     {
-        for (int x = -10; x <= 12; x = x + 2)
+        for (int x = -10; x <= 14; x = x + 2)
         {
             for (int y = 5; y >= -5; y--)
             {
@@ -211,8 +212,31 @@ public class Detectar : MonoBehaviour
                 ptsProhibidos.Add(new Puntos(x, y));
             }
         }
+        for(int y = 5; y>=-5; y = y - 2){// (-13, y)
+            ptsProhibidos.Add(new Puntos(-13, y));
+        }
+        for(int y=5; y>=-5; y--){// (-12, y)
+
+            ptsProhibidos.Add(new Puntos(-12, y));
+        }
+        for(int y=5; y>=-5; y--){// (-14, y)
+
+            ptsProhibidos.Add(new Puntos(-14, y));
+        }
+        for(int y=5; y>=-5; y = y - 2){// (-14, y)
+
+            ptsProhibidos.Add(new Puntos(13, y));
+        }           
+        for(int y=5; y>=-5; y--){// (-14, y)
+
+            ptsProhibidos.Add(new Puntos(14, y));
+        }                 
+        ptsProhibidos.Add(new Puntos(13, -2));
         ptsProhibidos.Add(new Puntos(11, -4));
         ptsProhibidos.Add(new Puntos(11, -3));
+        ptsProhibidos.Add(new Puntos(-13, 4));
+        ptsProhibidos.Add(new Puntos(-11, 4));
+        ptsProhibidos.Add(new Puntos(-9, 4));
     }
 
     IEnumerator desactivarModoColocar()
@@ -230,6 +254,8 @@ public class Detectar : MonoBehaviour
 
     public void ActivadorEspejo()
     {
-        ActivarEspejo = true;
+        if(modoColocar == false){
+            ActivarEspejo = true;
+        }
     }
 }
